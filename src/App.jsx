@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Spinner, Stack } from "react-bootstrap";
+
 import "./App.css";
 
-import Home from "./pages/Home"
-import List from "./pages/List"
+import Home from "./pages/Home";
+import List from "./pages/List";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -17,7 +19,7 @@ function App() {
         const response = await fetch(url);
         const json = await response.json();
         setSeismes(json.seismes);
-        setLoading(false)
+        setLoading(false);
       } catch (error) {
         console.log("error", error);
       }
@@ -27,15 +29,24 @@ function App() {
   }, []);
 
   const changePage = (page) => {
-    setPage(page)
-  }
+    window.location.href = "#";
+    setPage(page);
+  };
 
-  if (loading) return <>Chargement ...</>;
+  if (loading)
+    return (
+      <Stack>
+        <Spinner
+          animation="border"
+          variant="primary"
+          className="mx-auto mt-5"
+        />
+      </Stack>
+    );
   if (page === "home") {
-    return <Home seismes={seismes} changePage={changePage}></Home>
-  }
-  else if(page === "list") {
-    return <List seismes={seismes} changePage={changePage}></List>
+    return <Home seismes={seismes} changePage={changePage}></Home>;
+  } else if (page === "list") {
+    return <List seismes={seismes} changePage={changePage}></List>;
   }
 }
 

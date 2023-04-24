@@ -8,21 +8,11 @@ import { Footer } from "../components/Footer";
 import { Card } from "../components/Card";
 import { Filter } from "../components/Filter";
 
-const fetchData = async (url, callback) => {
-  try {
-    const response = await fetch(url);
-    const json = await response.json();
-    callback(json);
-  } catch (error) {
-    console.log("error", error);
-  }
-};
+const perPage = 50
 
 function List({ seismes }) {
   const [seismesFiltered, setSeismesFiltered] = useState(seismes);
-  const [perPage, setPerPage] = useState(50000);
-  const [loading, setLoading] = useState(true);
-  const [next, setNext] = useState(10);
+  const [next, setNext] = useState(perPage);
 
   const [filtres, setFiltres] = useState({});
 
@@ -72,7 +62,7 @@ function List({ seismes }) {
   };
 
   const handleMoreSeismes = () => {
-    setNext(next + 10);
+    setNext(next + perPage);
   };
 
   return (

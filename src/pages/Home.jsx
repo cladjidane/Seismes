@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 
 import { Mapheader } from "../components/map/Mapheader";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { colorPalet } from "../helpers";
+
 
 function Home({ seismes, changePage }) {
-  const _render = () => {
+  const _renderCards = () => {
     const lastSeismes = seismes.slice(-6);
-    
+
     return lastSeismes.map((seisme, i) => (
       <div key={`seisme-${i}`} className="col">
         <div className="card shadow-sm">
@@ -19,9 +20,21 @@ function Home({ seismes, changePage }) {
           />
 
           <div className="card-body">
-            <p className="card-text">{seisme.pays}</p>
+            <p className="card-text">
+              {seisme.pays}
+              <span
+                className="float-end rounded-circle"
+                style={{
+                  height: "20px",
+                  width: "20px",
+                  background: colorPalet[Math.round(seisme.mag)],
+                }}
+              ></span>
+            </p>
             <div className="d-flex justify-content-between align-items-center">
-              <small className="text-muted">{new Date(seisme.instant).toLocaleDateString('fr')}</small>
+              <small className="text-muted">
+                {new Date(seisme.instant).toLocaleDateString("fr")}
+              </small>
               <small className="text-muted">Mag. {seisme.mag}</small>
             </div>
           </div>
@@ -39,9 +52,13 @@ function Home({ seismes, changePage }) {
           <div className="container">
             <h2>Derniers séismes</h2>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-              {seismes && _render()}
+              {seismes && _renderCards()}
             </div>
-            <Button variant="dark" className="my-5" onClick={() => changePage("list")}>
+            <Button
+              variant="dark"
+              className="my-5"
+              onClick={() => changePage("list")}
+            >
               Liste de tous les séismes
             </Button>
           </div>
