@@ -1,14 +1,3 @@
-export const layerSeismesPoints = {
-  id: "seismes-points",
-  type: "circle",
-  source: "source-seismes",
-  layout: {},
-  paint: {
-    "circle-radius": 8,
-    "circle-color": "rgba(55,148,179,1)",
-  },
-};
-
 export const clusterLayer = {
   id: "clusters",
   type: "circle",
@@ -62,9 +51,9 @@ export const unclusteredPointLayer = {
   source: "source-seismes",
   filter: ["!", ["has", "point_count"]],
   paint: {
-    "circle-color": "#FFCC00",
-    "circle-radius": 3,
-    "circle-stroke-width": 1,
+    "circle-color": "#d70000",
+    "circle-radius": 4,
+    "circle-stroke-width": 2,
     "circle-stroke-color": "#fff",
   },
 };

@@ -17,6 +17,7 @@ export const Mapheader = ({ epaves }) => {
 
   const onHover = useCallback((event) => {
     const feature = event.features && event.features[0];
+    console.log(feature)
     if(!feature) return
     setHoverInfo({
       longitude: event.lngLat.lng,
@@ -43,12 +44,12 @@ export const Mapheader = ({ epaves }) => {
         mapboxAccessToken={
           "pk.eyJ1IjoiamVvZnVuIiwiYSI6ImNrd3huZXZjMzAwMWkycXFtb29zeDMxdnMifQ.N0SyKbZ6Br7bCL0IPmUZIg"
         }
-        interactiveLayerIds={["unclustered-point"]}
+        interactiveLayerIds={[unclusteredPointLayer.id]}
         cursor={cursor}
-        projection="globe"
-        onClick={false}
+        //projection="globe"
+        onClick={onHover}
         scrollZoom={false}
-        onMouseMove={onHover}
+        //onMouseMove={onHover}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
