@@ -7,35 +7,25 @@ import { Footer } from "../components/Footer";
 import { colorPalet } from "../helpers";
 
 
-function Home({ seismes, changePage }) {
+function Home({ epaves, changePage }) {
   const _renderCards = () => {
-    const lastSeismes = seismes.slice(-6);
+    const lastEpaves = epaves.features.slice(-6);
 
-    return lastSeismes.map((seisme, i) => (
-      <div key={`seisme-${i}`} className="col">
+    return lastEpaves.map((epave, i) => (
+      <div key={`epave-${i}`} className="col">
         <div className="card shadow-sm">
           <img
             alt="static Mapbox map of the San Francisco bay area"
-            src={`https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+FF0000(${seisme.lon},${seisme.lat})/${seisme.lon},${seisme.lat},4,0.00,0.00/400x200@2x?access_token=pk.eyJ1IjoiamVvZnVuIiwiYSI6ImNrd3huZXZjMzAwMWkycXFtb29zeDMxdnMifQ.N0SyKbZ6Br7bCL0IPmUZIg`}
+            src={`https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/pin-l+FF0000(${epave.geometry.coordinates[0]},${epave.geometry.coordinates[1]})/${epave.geometry.coordinates[0]},${epave.geometry.coordinates[1]},4,0.00,0.00/400x200@2x?access_token=pk.eyJ1IjoiamVvZnVuIiwiYSI6ImNrd3huZXZjMzAwMWkycXFtb29zeDMxdnMifQ.N0SyKbZ6Br7bCL0IPmUZIg`}
           />
 
           <div className="card-body">
             <p className="card-text">
-              {seisme.pays}
-              <span
-                className="float-end rounded-circle"
-                style={{
-                  height: "20px",
-                  width: "20px",
-                  background: colorPalet[Math.round(seisme.mag)],
-                }}
-              ></span>
+              {epave.properties.nom ? epave.properties.nom : "Inconnu"}
             </p>
             <div className="d-flex justify-content-between align-items-center">
-              <small className="text-muted">
-                {new Date(seisme.instant).toLocaleDateString("fr")}
-              </small>
-              <small className="text-muted">Mag. {seisme.mag}</small>
+              <small className="text-muted">Type {epave.properties.caract_bat ? epave.properties.caract_bat : 'inconnu'}</small>
+              <small className="text-muted">Prof. {epave.properties.brassiage ? (epave.properties.brassiage*1.8288).toFixed() + 'm' : 'inconnu'}</small>
             </div>
           </div>
         </div>
@@ -47,19 +37,19 @@ function Home({ seismes, changePage }) {
     <div className="App">
       <Header></Header>
       <main>
-        {seismes && <Mapheader seismes={seismes}></Mapheader>}
+        {epaves && <Mapheader epaves={epaves}></Mapheader>}
         <div className="album py-5 bg-light">
           <div className="container">
-            <h2>Derniers séismes</h2>
+            <h2>Dernières épaves</h2>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-              {seismes && _renderCards()}
+              {epaves && _renderCards()}
             </div>
             <Button
               variant="dark"
               className="my-5"
               onClick={() => changePage("list")}
             >
-              Liste de tous les séismes
+              Liste de toutes les épaves
             </Button>
           </div>
         </div>

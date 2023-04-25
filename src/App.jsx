@@ -6,26 +6,30 @@ import "./App.css";
 
 import Home from "./pages/Home";
 import List from "./pages/List";
+// Data fake
+import sourceEpaves from "./datas/epaves-ouest-france.json";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState("home");
-  const [seismes, setSeismes] = useState(null);
+  const [epaves, setEpaves] = useState(null);
 
   useEffect(() => {
-    const url = "https://isenapi.koality.pw/api/seismes/50000";
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        setSeismes(json.seismes);
-        setLoading(false);
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
+    // const url = "https://isenapi.koality.pw/api/epaves";
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await fetch(url);
+    //     const json = await response.json();
+    //     setEpaves(json.epaves);
+    //     setLoading(false);
+    //   } catch (error) {
+    //     console.log("error", error);
+    //   }
+    // };
 
-    fetchData();
+    // fetchData();
+    setEpaves(sourceEpaves)
+    setLoading(false);
   }, []);
 
   const changePage = (page) => {
@@ -44,9 +48,9 @@ function App() {
       </Stack>
     );
   if (page === "home") {
-    return <Home seismes={seismes} changePage={changePage}></Home>;
+    return <Home epaves={epaves} changePage={changePage}></Home>;
   } else if (page === "list") {
-    return <List seismes={seismes} changePage={changePage}></List>;
+    return <List epaves={epaves} changePage={changePage}></List>;
   }
 }
 

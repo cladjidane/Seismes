@@ -3,28 +3,17 @@ import { useEffect, useState, useMemo, useCallback } from "react";
 
 import Map, { Source, Layer, Popup, NavigationControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import sourcePlates from "../../plates.json";
 import {
-  layerPlatesLines,
-  layerPlatesBg,
-  layerPlatesBgHover,
   clusterCountLayer,
   clusterLayer,
   unclusteredPointLayer,
 } from "./mapstyles";
-import { sourceSeismes } from "./helpers";
 import MapControls from "./MapControls";
 
-export const Mapheader = ({ seismes }) => {
+export const Mapheader = ({ epaves }) => {
   const [hoverInfo, setHoverInfo] = useState(null);
   const [point, setPoint] = useState(null);
   const [cursor, setCursor] = useState('auto');
-
-  const selectedCounty = (hoverInfo && hoverInfo.properties.PlateName) || "";
-  const filter = useMemo(
-    () => ["in", "PlateName", selectedCounty],
-    [selectedCounty]
-  );
 
   const onHover = useCallback((event) => {
     const feature = event.features && event.features[0];
@@ -32,7 +21,7 @@ export const Mapheader = ({ seismes }) => {
     setHoverInfo({
       longitude: event.lngLat.lng,
       latitude: event.lngLat.lat,
-      type: feature.layer.id === "unclustered-point" ? 'point': 'plate',
+      type: 'point',
       properties: feature && feature.properties,
     });
   }, []);
@@ -54,7 +43,7 @@ export const Mapheader = ({ seismes }) => {
         mapboxAccessToken={
           "pk.eyJ1IjoiamVvZnVuIiwiYSI6ImNrd3huZXZjMzAwMWkycXFtb29zeDMxdnMifQ.N0SyKbZ6Br7bCL0IPmUZIg"
         }
-        interactiveLayerIds={["plaques-bg", "unclustered-point"]}
+        interactiveLayerIds={["unclustered-point"]}
         cursor={cursor}
         projection="globe"
         onClick={false}
@@ -65,15 +54,10 @@ export const Mapheader = ({ seismes }) => {
       >
         <NavigationControl />
 
-        <Source id="source-plates" type="geojson" data={sourcePlates}>
-          <Layer {...layerPlatesBg} />
-          <Layer {...layerPlatesBgHover} filter={filter} />
-          <Layer {...layerPlatesLines} />
-        </Source>
         <Source
           id="source-seismes"
           type="geojson"
-          data={sourceSeismes(seismes)}
+          data={epaves}
           cluster={false}
           clusterMaxZoom={14}
           clusterRadius={50}

@@ -10,15 +10,15 @@ import { Filter } from "../components/Filter";
 
 const perPage = 50
 
-function List({ seismes }) {
-  const [seismesFiltered, setSeismesFiltered] = useState(seismes);
+function List({ epaves }) {
+  const [epavesFiltered, setEpavesFiltered] = useState(epaves.features);
   const [next, setNext] = useState(perPage);
 
   const [filtres, setFiltres] = useState({});
 
   useEffect(() => {
-    if (!seismes) return;
-    let newSeismes = seismes.filter((seisme) => {
+    if (!epaves.features) return;
+    let newEpaves = epaves.features.filter((epave) => {
       let correspondance = true;
       for (let critere in filtres) {
         if (filtres[critere].value === "") continue;
@@ -39,7 +39,7 @@ function List({ seismes }) {
 
       return correspondance;
     });
-    setSeismesFiltered(newSeismes);
+    setEpavesFiltered(newEpaves);
   }, [filtres]);
 
   const handleFiltresChange = (e) => {
@@ -61,7 +61,7 @@ function List({ seismes }) {
     });
   };
 
-  const handleMoreSeismes = () => {
+  const handleMoreEpaves = () => {
     setNext(next + perPage);
   };
 
@@ -74,21 +74,21 @@ function List({ seismes }) {
             <div class="row g-5">
               <div class="col-md-7 col-lg-8 order-md-last">
                 <h2>
-                  Tous les séismes
-                  <span class="text-secondary float-end">{seismesFiltered.length}</span>
+                  Toutes les épaves
+                  <span class="text-secondary float-end">{epavesFiltered.length}</span>
                 </h2>
                 <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-                  {seismesFiltered.length > 0 ? (
-                    seismesFiltered
+                  {epavesFiltered.length > 0 ? (
+                    epavesFiltered
                       .slice(0, next)
-                      .map((seisme, i) => (
-                        <Card {...seisme} key={`seisme-${i}`} />
+                      .map((epave, i) => (
+                        <Card {...epave} key={`epave-${i}`} />
                       ))
                   ) : (
                     <p>Aucun résultat</p>
                   )}
                 </div>
-                <Button className="mt-4" onClick={handleMoreSeismes}>
+                <Button className="mt-4" onClick={handleMoreEpaves}>
                   En voir +
                 </Button>
               </div>
