@@ -8,7 +8,7 @@ import { Footer } from "../components/Footer";
 import { Card } from "../components/Card";
 import { Filter } from "../components/Filter";
 
-const perPage = 50
+const perPage = 50;
 
 function List({ epaves }) {
   const [epavesFiltered, setEpavesFiltered] = useState(epaves.features);
@@ -18,20 +18,27 @@ function List({ epaves }) {
 
   useEffect(() => {
     if (!epaves.features) return;
-    let newEpaves = epaves.features.filter((epave) => {
+    let newEpaves = epaves.features.filter((epave, i) => {
       let correspondance = true;
       for (let critere in filtres) {
         if (filtres[critere].value === "") continue;
         switch (filtres[critere].type) {
           case "between":
             if (
-              seisme[critere] < filtres[critere].value[0] ||
-              seisme[critere] > filtres[critere].value[1]
+              epave.properties[critere] < filtres[critere].value[0] ||
+              epave.properties[critere] > filtres[critere].value[1]
             )
               correspondance = false;
             break;
           case "egal":
-            if (seisme[critere] !== filtres[critere].value)
+            if (epave.properties[critere] === null) {
+              correspondance = false;
+              break;
+            }
+            console.log(i)
+            console.log(epave.properties[critere])
+            console.log(filtres[critere].value)
+            if (!epave.properties[critere].toLowerCase().includes(filtres[critere].value.toLowerCase()))
               correspondance = false;
             break;
         }
@@ -75,15 +82,15 @@ function List({ epaves }) {
               <div class="col-md-7 col-lg-8 order-md-last">
                 <h2>
                   Toutes les épaves
-                  <span class="text-secondary float-end">{epavesFiltered.length}</span>
+                  <span class="text-secondary float-end">
+                    {epavesFiltered.length}
+                  </span>
                 </h2>
-                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+                <div className="row row-cols-1">
                   {epavesFiltered.length > 0 ? (
                     epavesFiltered
                       .slice(0, next)
-                      .map((epave, i) => (
-                        <Card {...epave} key={`epave-${i}`} />
-                      ))
+                      .map((epave, i) => <Card {...epave} key={`epave-${i}`} />)
                   ) : (
                     <p>Aucun résultat</p>
                   )}
@@ -100,30 +107,56 @@ function List({ epaves }) {
                 <div class="col">
                   <Filter
                     onChange={handleFiltresChange}
-                    field="pays"
+                    field="type_obj"
+                    label="Type de navire"
                     type="egal"
                     options={[
-                      { name: "Alaska", value: "Alaska" },
-                      { name: "Mexico", value: "Mexico" },
-                      { name: "California", value: "California" },
-                      { name: "NewZealand", value: "NewZealand" },
-                      { name: "Fiji", value: "Fiji" },
+                      {
+                        name: "Bateau de pêche, chalutier",
+                        value: "Bateau de pêche, chalutier",
+                      },
+                      { name: "Bateau à vapeur", value: "Bateau à vapeur" },
+                      { name: "Remorqueur", value: "Remorqueur" },
+                      { name: "Navire marchand", value: "Navire marchand" },
+                      { name: "Sous-marin", value: "Sous-marin" },
                     ]}
                   />
 
                   <Filter
                     onChange={handleFiltresChange}
-                    field="mag"
+                    field="brassiage"
+                    label="Profondeur"
                     type="between"
                     options={[
-                      { name: "Moins de 1", value: [0, 1] },
-                      { name: "Entre 1 et 2", value: [1, 2] },
-                      { name: "Entre 2 et 3", value: [2, 3] },
-                      { name: "Entre 3 et 4", value: [3, 4] },
-                      { name: "Entre 4 et 5", value: [4, 5] },
-                      { name: "Entre 5 et 6", value: [5, 6] },
-                      { name: "Entre 6 et 7", value: [6, 7] },
-                      { name: "Entre 7 et 8", value: [7, 8] },
+                      { name: "Moins de 10 mètres", value: [0, 10 / 1.829] },
+                      {
+                        name: "Entre 10 et 20 mètres",
+                        value: [10 / 1.829, 20 / 1.829],
+                      },
+                      {
+                        name: "Entre 20 et 30 mètres",
+                        value: [20 / 1.829, 30 / 1.829],
+                      },
+                      {
+                        name: "Entre 30 et 40 mètres",
+                        value: [30 / 1.829, 40 / 1.829],
+                      },
+                      {
+                        name: "Entre 40 et 50 mètres",
+                        value: [40 / 1.829, 50 / 1.829],
+                      },
+                      {
+                        name: "Entre 50 et 60 mètres",
+                        value: [50 / 1.829, 60 / 1.829],
+                      },
+                      {
+                        name: "Entre 60 et 70 mètres",
+                        value: [60 / 1.829, 70 / 1.829],
+                      },
+                      {
+                        name: "Plus de 80 mètres",
+                        value: [70 / 1.829, 2000 / 1.829],
+                      },
                     ]}
                   />
                 </div>

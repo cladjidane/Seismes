@@ -33,9 +33,9 @@ export const Mapheader = ({ epaves }) => {
     <section className="w-100 position-relative">
       <Map
         initialViewState={{
-          longitude: -122.4,
-          latitude: 37.8,
-          zoom: 1,
+          longitude: -2.2997122, 
+          latitude: 47.1181677,
+          zoom: 5,
           renderWorldCopies: false,
         }}
         style={{ width: "100%", height: "80vh" }}
@@ -55,10 +55,10 @@ export const Mapheader = ({ epaves }) => {
         <NavigationControl />
 
         <Source
-          id="source-seismes"
+          id="source-epaves"
           type="geojson"
           data={epaves}
-          cluster={false}
+          cluster={true}
           clusterMaxZoom={14}
           clusterRadius={50}
         >

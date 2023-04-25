@@ -1,32 +1,3 @@
-export const layerPlatesBg = {
-  id: "plaques-bg",
-  type: "fill",
-  source: "source-plates",
-  paint: {
-    "fill-color": "#0080ff",
-    "fill-opacity": 0,
-  },
-};
-export const layerPlatesBgHover = {
-  id: "plaques-bg-hover",
-  type: "fill",
-  source: "source-plates",
-  paint: {
-    "fill-color": "red",
-    "fill-opacity": 0.3,
-  },
-};
-export const layerPlatesLines = {
-  id: "plaques-lines",
-  type: "line",
-  source: "source-plates",
-  layout: {},
-  paint: {
-    "line-color": "#000",
-    "line-width": 1,
-  },
-};
-
 export const layerSeismesPoints = {
   id: "seismes-points",
   type: "circle",

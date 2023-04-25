@@ -1,8 +1,8 @@
-export const Filter = ({field, options, type, onChange}) => {
+export const Filter = ({field, label, options, type, onChange}) => {
   return (
     <>
       <label for="mag" class="form-label text-capitalize" >
-        {field}
+        {label}
       </label>
       <select
         name={field}

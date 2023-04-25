@@ -3,7 +3,7 @@ export const Header = () => {
     <div className="navbar navbar-dark bg-dark shadow-sm">
       <div className="container">
         <a href="/" className="navbar-brand d-flex align-items-center">
-          <strong>Projet séismes</strong>
+          <strong>Projet épaves</strong>
         </a>
       </div>
     </div>

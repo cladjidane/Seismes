@@ -9,7 +9,7 @@ import { colorPalet } from "../helpers";
 
 function Home({ epaves, changePage }) {
   const _renderCards = () => {
-    const lastEpaves = epaves.features.slice(-6);
+    const lastEpaves = epaves.features.filter((epave => epave.properties.nom)).slice(-6);
 
     return lastEpaves.map((epave, i) => (
       <div key={`epave-${i}`} className="col">
