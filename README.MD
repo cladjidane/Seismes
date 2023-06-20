@@ -6,7 +6,7 @@
 
 Via git : `git clone https://github.com/cladjidane/Seismes`
 
-Téléchargement : ![alt text](https://github.com/cladjidane/[reponame]/blob/main/dl-project.png?raw=true)
+Téléchargement : ![alt text](https://github.com/cladjidane/Seismes/blob/main/dl-project.png?raw=true)
 
 ### Installation des dépendances
 
