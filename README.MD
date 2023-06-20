@@ -20,7 +20,7 @@ Lancer le projet pour dev : `npm run dev`
 
 ## Explication de code 
 
-Le code important se trouve dans le fichier App.jsx
+Le code important se trouve dans le dossier src, dans le fichier App.jsx
 
 Quelques lignes de commentaires expliques ses principes
 
